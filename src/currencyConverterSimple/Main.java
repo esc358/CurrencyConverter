@@ -1,4 +1,4 @@
-package currencyconverter;
+package currencyConverterSimple;
 
 public class Main
 {
@@ -10,7 +10,7 @@ public class Main
         converter.addCurrency(new Currency(1.3, "GBP"));
 
         double amountInUSD = 100;
-        double convertedAmount = converter.convert(amountInUSD, "USD", "GBP");
+        double convertedAmount = converter.convert(amountInUSD, "USa", "GBP");
         System.out.println("Amount in USD: " + amountInUSD);
         System.out.println("Amount in GBP: " + convertedAmount);
     }

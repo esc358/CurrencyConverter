@@ -1,10 +1,10 @@
 /*Created by ESCL
 * February 12, 2025 @ 9:26pm EST*/
-package currencyconverter;
+package currencyConverterSimple;
 
 public class Currency
 {
-    //define variables
+    //define private variables for security
     private String name;
     private double exchangeRate;
 
