@@ -1,11 +1,16 @@
+
 package currencyConverterWithAPI;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Scanner;
 
+
 public class CurrencyConverter
 {
-    public static void main(String[] args)
+    public static void main(String[] args) throws IOException
     {
         HashMap<Integer, String> currencyCodes = new HashMap<>();
 
@@ -44,11 +49,32 @@ public class CurrencyConverter
 
         System.out.println("Thanks for using this.");
 
+        String apik = System.getenv("API_KEY");
+        System.out.println(apik);
+        String url = "https://api.currencyapi.com/v3/latest?apikey=" + apik;
+
+        System.out.println(url);
+
+        String filePath = "./src/currencyConverterWithAPI/api-key.txt";
+        String apiKey = readApiKeyFromFile(filePath);
+        System.out.println(apiKey);
+       // String url = "https://api.currencyapi.com/v3/latest?apikey=" + System.getenv("Api-key");
+
     }
 
-    private static void sendHttpGetRequest(String fromCode, String toCode, double amount)
+    private static void sendHttpGetRequest(String fromCode, String toCode, double amount) throws IOException
     {
-        String url = "https://api.exchangeratesapi.io/latest?base=" + fromCode + "&symbols=" + toCode;
+        String filePath = "./src/currencyConverterWithAPI/api-key.txt";
+        String apiKey = readApiKeyFromFile(filePath);
+        System.out.println(apiKey);
+        String url = "https://api.currencyapi.com/v3/latest?apikey=" + System.getenv("Api-key");
+    }
 
+    public static String readApiKeyFromFile(String filePath) throws IOException
+    {
+        BufferedReader reader = new BufferedReader(new FileReader(filePath));
+        String apiKey = reader.readLine(); // Read the first line which should contain the API key
+        reader.close();
+        return apiKey;
     }
 }

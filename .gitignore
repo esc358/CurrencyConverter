@@ -3,6 +3,7 @@ out/
 !**/src/main/**/out/
 !**/src/test/**/out/
 *.env
+*.txt
 
 ### Eclipse ###
 .apt_generated
