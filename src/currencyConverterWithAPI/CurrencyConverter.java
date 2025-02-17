@@ -1,9 +1,13 @@
 
 package currencyConverterWithAPI;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+
+import java.io.*;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.Scanner;
 
@@ -49,16 +53,19 @@ public class CurrencyConverter
 
         System.out.println("Thanks for using this.");
 
-        String apik = System.getenv("API_KEY");
-        System.out.println(apik);
-        String url = "https://api.currencyapi.com/v3/latest?apikey=" + apik;
 
-        System.out.println(url);
+        String route = "https://api.currencyapi.com/v3/latest?apikey=" + readApiKeyFromFile("./src/currencyConverterWithAPI/api-key.txt");
 
-        String filePath = "./src/currencyConverterWithAPI/api-key.txt";
-        String apiKey = readApiKeyFromFile(filePath);
-        System.out.println(apiKey);
-       // String url = "https://api.currencyapi.com/v3/latest?apikey=" + System.getenv("Api-key");
+        URL url = new URL(route);
+        HttpURLConnection request = (HttpURLConnection) url.openConnection();
+        request.connect();
+
+        JsonParser jp = new JsonParser();
+        JsonElement root = jp.parse(new InputStreamReader((InputStream) request.getContent()));
+        JsonObject jsonobj = root.getAsJsonObject();
+        JsonObject rates = jsonobj.getAsJsonObject("meta");
+        String date = rates.get("last_updated_at").getAsString();
+        System.out.println(date);
 
     }
 
@@ -67,9 +74,10 @@ public class CurrencyConverter
         String filePath = "./src/currencyConverterWithAPI/api-key.txt";
         String apiKey = readApiKeyFromFile(filePath);
         System.out.println(apiKey);
-        String url = "https://api.currencyapi.com/v3/latest?apikey=" + System.getenv("Api-key");
+        String url = "https://api.currencyapi.com/v3/latest?apikey=" + apiKey;
     }
 
+    //Read .txt file
     public static String readApiKeyFromFile(String filePath) throws IOException
     {
         BufferedReader reader = new BufferedReader(new FileReader(filePath));
