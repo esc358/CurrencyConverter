@@ -63,9 +63,11 @@ public class CurrencyConverter
         JsonParser jp = new JsonParser();
         JsonElement root = jp.parse(new InputStreamReader((InputStream) request.getContent()));
         JsonObject jsonobj = root.getAsJsonObject();
-        JsonObject rates = jsonobj.getAsJsonObject("meta");
-        String date = rates.get("last_updated_at").getAsString();
-        System.out.println(date);
+        JsonObject data = jsonobj.getAsJsonObject("data");
+        JsonObject currency = data.getAsJsonObject(getCurrencyCode());
+        System.out.println(currency);
+
+        //TODO: Continue manipulating JSON data, be creative an create methods to access JSON data needed.
 
     }
 
@@ -85,4 +87,12 @@ public class CurrencyConverter
         reader.close();
         return apiKey;
     }
+
+    public static String getCurrencyCode()
+    {
+        Scanner scanner = new Scanner(System.in);
+        String currencyCode = scanner.nextLine();
+        return currencyCode;
+    }
+
 }
