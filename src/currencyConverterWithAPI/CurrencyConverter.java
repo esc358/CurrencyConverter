@@ -1,6 +1,7 @@
 
 package currencyConverterWithAPI;
 
+import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -8,7 +9,9 @@ import com.google.gson.JsonParser;
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Scanner;
 
 
@@ -18,26 +21,18 @@ public class CurrencyConverter
     {
         HashMap<Integer, String> currencyCodes = new HashMap<>();
 
-        //currency codes
-        currencyCodes.put(1, "USD");
-        currencyCodes.put(2, "EUR");
-        currencyCodes.put(3, "GBP");
-        currencyCodes.put(4, "JPY");
-        currencyCodes.put(5, "AUD");
-
         String fromCode, toCode;
         double amount;
 
         Scanner scanner = new Scanner(System.in);
 
         System.out.println("Welcome to Currency Convert");
-
         System.out.println("Enter currency code to convert from: ");
 
         System.out.println("1:USD\t 2:EUR\t 3:GBP\t 4:JPY\t 5:AUD");
 
         System.out.println("Enter from currency code: ");
-        fromCode = currencyCodes.get(scanner.nextInt());
+        fromCode = scanner.next();
 
         System.out.println("Enter currency code to convert to: ");
 
@@ -64,8 +59,30 @@ public class CurrencyConverter
         JsonElement root = jp.parse(new InputStreamReader((InputStream) request.getContent()));
         JsonObject jsonobj = root.getAsJsonObject();
         JsonObject data = jsonobj.getAsJsonObject("data");
-        JsonObject currency = data.getAsJsonObject(getCurrencyCode());
-        System.out.println(currency);
+
+        //TODO: manipulate JSON to access first level, print it to String for user to select
+        //TODO: 1. convert json object to array
+        //TODO: Display currencies available to user to decide, apply validations
+
+        // Extract currency codes (keys of the "data" object) and build a string
+        StringBuilder currencyCodes2 = new StringBuilder();
+        for (String key : data.keySet()) {
+            currencyCodes2.append(key).append(", ");
+        }
+
+        // Print the currency codes
+        System.out.println("Currency Codes: " + currencyCodes2.toString().trim());
+
+        System.out.println(data);
+        //System.out.println(currencies);
+
+
+
+        //JsonArray currencies = data.toJSONArray;
+        //String currency = data.toString();
+       // JsonObject currency = data.getAsJsonObject(fromCode);
+
+        //System.out.println(currency);
 
         //TODO: Continue manipulating JSON data, be creative an create methods to access JSON data needed.
 
@@ -88,11 +105,15 @@ public class CurrencyConverter
         return apiKey;
     }
 
-    public static String getCurrencyCode()
-    {
-        Scanner scanner = new Scanner(System.in);
-        String currencyCode = scanner.nextLine();
-        return currencyCode;
-    }
+//    private static void parseAndPrintCurrencyCodes(String jsonResponse) {
+//        JsonParser jp = new JsonParser();
+//        JsonElement root = jp.parse(jsonResponse);
+//        JsonObject jsonObject = root.getAsJsonObject();
+//
+//        // Get the "data" object
+//        JsonObject data = jsonObject.getAsJsonObject("data");
+//
+//
+//    }
 
 }
