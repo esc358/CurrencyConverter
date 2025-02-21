@@ -7,7 +7,11 @@ import java.io.IOException;
 
 public class Password
 {
-    //Read .txt file
+    /*Public method takes a string for parameter
+    * BufferedReader class is instantiated as a null object
+    * Reader wrapped  in try/catch to avoid throws IOException in Password class
+    * reader assigns new BufferedReader and wraps it in FileReader to avoid bytes to be read from file
+    *  */
     public String readApiKeyFromFile(String filePath)
     {
         BufferedReader reader = null;

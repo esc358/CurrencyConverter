@@ -18,6 +18,9 @@ public class ApiCurrency
     String apiKey = password.readApiKeyFromFile("./src/currencyConverterWithAPI/api-key.txt");
 
 
+    public String apiCode(String currencyCode){
+        return null;
+    }
     //String urlRoute = apiUrl + apiKey;
         //URL url = new URL(urlRoute);
 //        HttpURLConnection request = (HttpURLConnection) url.openConnection();
